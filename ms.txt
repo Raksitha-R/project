@@ -63,3 +63,16 @@ class MyDBHelperLab2(context: Context) : SQLiteOpenHelper(context, "Lab2DB", nul
 
 
 
+val fire=findViewById<EditText>(R.id.fire)
+        val firebut=findViewById<Button>(R.id.firesave)
+        firebut.setOnClickListener{
+            val db=FirebaseDatabase.getInstance()
+            val ref=db.getReference("devidb")
+            val userid=ref.push().key?: return@setOnClickListener
+            val usermap= mapOf("name" to fire.text.toString())
+            ref.child(userid).setValue(usermap)
+                .addOnSuccessListener { Toast.makeText(this,"saved",Toast.LENGTH_SHORT).show() }
+                .addOnFailureListener{ Toast.makeText(this,"no saved",Toast.LENGTH_SHORT).show() }
+        }
+
+
